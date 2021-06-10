@@ -10,6 +10,7 @@ import java.util.UUID;
 @Getter
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tb_user")
 public class User {
 
@@ -17,7 +18,7 @@ public class User {
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
-    private final UUID uuid;
-    private final String name;
-    private final String email;
+    private UUID uuid;
+    private String name;
+    private String email;
 }
