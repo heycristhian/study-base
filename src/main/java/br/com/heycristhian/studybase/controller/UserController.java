@@ -5,10 +5,7 @@ import br.com.heycristhian.studybase.exception.UserNotFoundException;
 import br.com.heycristhian.studybase.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -30,5 +27,11 @@ public class UserController {
     public ResponseEntity<User> findById(@PathVariable UUID uuid) {
         User user = service.findById(uuid).orElseThrow(() -> new UserNotFoundException(uuid));
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping
+    public ResponseEntity<User> save(@RequestBody User user) {
+        User savedUser = service.save(user);
+        return ResponseEntity.ok(savedUser);
     }
 }

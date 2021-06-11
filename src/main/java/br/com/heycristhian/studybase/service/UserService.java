@@ -15,8 +15,7 @@ public class UserService {
     @Autowired private UserRepository repository;
 
     public User save(User user) {
-        final User save = repository.save(user);
-        return user;
+        return repository.save(user);
     }
 
     public List<User> findAll() {
