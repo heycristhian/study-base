@@ -20,43 +20,33 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<RequestError> handleUserNotFoundException(UserNotFoundException e) {
-        var status = HttpStatus.NOT_FOUND;
-        RequestError requestError = getRequestError(e, "User not foud", status);
-        LOGGER.error("User not found: " + Arrays.toString(e.getStackTrace()));
-        return ResponseEntity.status(status).body(requestError);
+        return handleBodyException(e, HttpStatus.NOT_FOUND, "User not found");
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<RequestError> handleIllegalArgumentException(IllegalArgumentException e) {
-        var status = HttpStatus.BAD_REQUEST;
-        RequestError requestError = getRequestError(e, "Illegal Argument Exception", status);
-        LOGGER.error("Illegal Argument Exception: " + Arrays.toString(e.getStackTrace()));
-        return ResponseEntity.status(status).body(requestError);
+        return handleBodyException(e, HttpStatus.BAD_REQUEST, "Illegal Argument Exception");
     }
 
     @ExceptionHandler(NonUniqueValueException.class)
     public ResponseEntity<RequestError> handleNonUniqueValueException(NonUniqueValueException e) {
-        var status = HttpStatus.BAD_REQUEST;
-        RequestError requestError = getRequestError(e, "Non Unique Value Exception", status);
-        LOGGER.error("Value already registered: " + Arrays.toString(e.getStackTrace()));
-        return ResponseEntity.status(status).body(requestError);
+        return handleBodyException(e, HttpStatus.BAD_REQUEST, "Non Unique Value Exception");
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<RequestError> handleConstraintViolationException(ConstraintViolationException e) {
-        var status = HttpStatus.BAD_REQUEST;
-        RequestError requestError = getRequestError(e, "Non-conforming values", status);
-        LOGGER.error("Non-conforming values: " + Arrays.toString(e.getStackTrace()));
-        return ResponseEntity.status(status).body(requestError);
+        return handleBodyException(e, HttpStatus.BAD_REQUEST, "Non-conforming values");
     }
 
-    private RequestError getRequestError(Exception e, String title, HttpStatus status) {
-        return RequestError.builder()
+    private ResponseEntity<RequestError> handleBodyException(Exception e, HttpStatus status, String title) {
+        RequestError requestError = RequestError.builder()
                 .title(title)
                 .status(status.value())
                 .message(e.getMessage())
                 .localDateTime(LocalDateTime.now())
                 .classPath(e.getClass().getName())
                 .build();
+        LOGGER.error(title + ": " + Arrays.toString(e.getStackTrace()));
+        return ResponseEntity.status(status).body(requestError);
     }
 }
