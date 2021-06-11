@@ -17,7 +17,7 @@ public class Instantiation implements CommandLineRunner {
         userService.save(
                 User.builder()
                         .name("Cristhian Dias")
-                        .email("heycristhian")
+                        .email("heycristhian@gmail.com")
                         .build()
         );
     }
