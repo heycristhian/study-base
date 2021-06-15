@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @RestControllerAdvice
-public class RestExceptionHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
+public class RestUserExceptionHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestValidationExceptionHandler.class);
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<RequestError> handleUserNotFoundException(UserNotFoundException e) {
@@ -39,14 +39,14 @@ public class RestExceptionHandler {
     }
 
     private ResponseEntity<RequestError> handleBodyException(Exception e, HttpStatus status, String title) {
-        RequestError requestError = RequestError.builder()
+        RequestError errorResponse = RequestError.builder()
                 .title(title)
                 .status(status.value())
-                .message(e.getMessage())
+                .message(e.getLocalizedMessage())
                 .localDateTime(LocalDateTime.now())
-                .classPath(e.getClass().getName())
+                .objectName(e.getClass().getName())
                 .build();
         LOGGER.error(title + ": " + Arrays.toString(e.getStackTrace()));
-        return ResponseEntity.status(status).body(requestError);
+        return ResponseEntity.status(status).body(errorResponse);
     }
 }

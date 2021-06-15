@@ -1,6 +1,6 @@
 package br.com.heycristhian.studybase.config;
 
-import br.com.heycristhian.studybase.entity.User;
+import br.com.heycristhian.studybase.entity.domain.User;
 import br.com.heycristhian.studybase.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,7 +13,7 @@ public class Instantiation implements CommandLineRunner {
     private UserService userService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         userService.save(
                 User.builder()
                         .name("Cristhian Dias")

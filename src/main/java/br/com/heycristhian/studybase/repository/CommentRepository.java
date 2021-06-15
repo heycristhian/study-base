@@ -1,6 +1,6 @@
 package br.com.heycristhian.studybase.repository;
 
-import br.com.heycristhian.studybase.entity.Comment;
+import br.com.heycristhian.studybase.entity.domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

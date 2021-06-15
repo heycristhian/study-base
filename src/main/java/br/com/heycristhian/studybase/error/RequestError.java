@@ -1,18 +1,19 @@
 package br.com.heycristhian.studybase.error;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 
-@ToString
-@Builder
 @Getter
+@AllArgsConstructor
+@Builder
 public class RequestError {
     private final int status;
     private final String title;
     private final String message;
-    private final String classPath;
+    private final String objectName;
     private final LocalDateTime localDateTime;
+
 }

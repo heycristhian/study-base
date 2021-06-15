@@ -1,12 +1,15 @@
 package br.com.heycristhian.studybase.controller;
 
-import br.com.heycristhian.studybase.entity.User;
+import br.com.heycristhian.studybase.entity.domain.User;
+import br.com.heycristhian.studybase.entity.form.UserForm;
 import br.com.heycristhian.studybase.exception.UserNotFoundException;
 import br.com.heycristhian.studybase.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserService service;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
@@ -30,8 +36,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody User user) {
-        User savedUser = service.save(user);
-        return ResponseEntity.ok(savedUser);
+    public ResponseEntity<User> save(@Valid @RequestBody UserForm userForm) {
+        User user = modelMapper.map(userForm, User.class);
+        return ResponseEntity.ok(service.save(user));
     }
 }
