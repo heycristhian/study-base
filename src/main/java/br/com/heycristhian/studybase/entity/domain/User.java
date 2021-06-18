@@ -1,9 +1,6 @@
 package br.com.heycristhian.studybase.entity.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -22,6 +19,8 @@ public class User {
     @GeneratedValue(generator = "UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     private UUID uuid;
+    @Setter
     private String name;
+    @Setter
     private String email;
 }

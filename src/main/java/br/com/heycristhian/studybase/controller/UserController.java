@@ -1,7 +1,7 @@
 package br.com.heycristhian.studybase.controller;
 
 import br.com.heycristhian.studybase.entity.domain.User;
-import br.com.heycristhian.studybase.entity.form.UserForm;
+import br.com.heycristhian.studybase.entity.response.UserResponse;
 import br.com.heycristhian.studybase.exception.UserNotFoundException;
 import br.com.heycristhian.studybase.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -36,8 +36,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> save(@Valid @RequestBody UserForm userForm) {
-        User user = modelMapper.map(userForm, User.class);
+    public ResponseEntity<User> save(@Valid @RequestBody UserResponse userResponse) {
+        User user = modelMapper.map(userResponse, User.class);
         return ResponseEntity.ok(service.save(user));
     }
 }
